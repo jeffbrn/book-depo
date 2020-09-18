@@ -1,0 +1,10 @@
+{
+	"datasrc": "https://www.amazon.com/Dark-Intelligence-Transformation-Book-One/dp/159780844X/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1599080801&sr=8-1",
+	"details": {
+		"description": {
+			"selector": "#bookDesc_iframe > div#iframeContent",
+			"valueSeln": "#text",
+			"value": "<strong>One man will transcend death to seek vengeance. One woman will transform herself to gain power. And no one will emerge unscathed.</strong><br> <br> Thorvald Spear has been brought back from the dead. Killed a century earlier by Penny Royal, an unstable AI who turned rogue in the middle of a human versus alien war, the resurrected Spear has one thing on his mind: revenge.<br> <br> Crime lord Isobel Satomi got more than she bargained for when she struck a deal with Penny Royal. Turning part-AI herself gave her frightening power, but the upgrade came with horrifying repercussions—and it’s turning Isobel into something far from human.<br> <br> Spear hires Isobel to track down Penny Royal, but as she continues her metamorphosis, it’s clear that Isobel’s monstrous transformations will eventually become uncontrollable. Will Spear finish his hunt before becoming the hunted?<br> <br> Skyhorse Publishing, under our Night Shade and Talos imprints, is proud to publish a broad range of titles for readers interested in science fiction (space opera, time travel, hard SF, alien invasion, near-future dystopia), fantasy (grimdark, sword and sorcery, contemporary urban fantasy, steampunk, alternative history), and horror (zombies, vampires, and the occult and supernatural), and much more. While not every title we publish becomes a <em>New York Times</em> bestseller, a national bestseller, or a Hugo or Nebula award-winner, we are committed to publishing quality books from a diverse group of authors."
+		}
+	}
+}

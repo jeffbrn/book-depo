@@ -1,0 +1,16 @@
+{
+    "profiles": {
+        "DataLoader": {
+            "commandName": "Project",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        "Desktop": {
+	        "commandName": "Project",
+	        "environmentVariables": {
+		        "ASPNETCORE_ENVIRONMENT": "Desktop"
+	        }
+        }
+  }
+}

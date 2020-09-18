@@ -1,0 +1,37 @@
+{
+	"datasrc": "https://openlibrary.org/books/OL27023229M/Dark_Intelligence_Transformation_Book_One",
+	"details": {
+		"cover": {
+			"selector": "div.bookCover > img.cover",
+			"valueSeln": "#src"
+		},
+		"title": {
+			"selector": "div.editionAbout > h1#itemprop='name'",
+			"valueSeln": "#text",
+			"value": "Dark Intelligence: Transformation Book One"
+		},
+		"author": {
+			"selector": "div.editionAbout > a#itemprop='author'",
+			"valueSeln": "#text",
+			"value": "Neal Asher"
+		},
+		"publishInfo": {
+			"selector": "div.editionAbout > h4.publisher",
+			"date": {
+				"selector": "strong#itemprop='datePublished'",
+				"valueSeln": "#text",
+				"value": "Jan 05, 2016"
+			},
+			"publisher": {
+				"selector": "a#itemprop='publisher'",
+				"valueSeln": "#text",
+				"value": "Value Shade"
+			}
+		},
+		"numPages": {
+			"selector": "div.edition-omniline > span#itemprop='numberOfPages'",
+			"valueSeln": "#text",
+			"value": "412"
+		}
+}
+}

@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dataloader
+spec:
+  template:
+    spec:
+      containers:
+      - name: dataloader-cnt
+        image: registry.localhost:5000/data_loader_img:staging
+        env:
+          - name: AppSettings__Services__Data__Mongo__ServerAddr
+            value: mongo-svc
+          - name: AppSettings__DataSrcDir
+            value: /tmp/data
+      restartPolicy: Never
+  backoffLimit: 4

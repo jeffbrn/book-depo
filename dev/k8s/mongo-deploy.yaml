@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      volumes:
+        - name: mongo-pv-data
+          persistentVolumeClaim:
+            claimName: mongo-pv-claim
+      containers:
+      - name: mongodb-cnt
+        image: mongo:4.0-xenial
+        ports:
+        - containerPort: 27017
+          name: client
+        volumeMounts:
+        - name: mongo-pv-data
+          mountPath: /data/db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-svc
+  labels:
+    app: mongodb
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+    nodePort: 30017  # external access
+    name: client
+  selector:
+    app: mongodb
+  type: NodePort
