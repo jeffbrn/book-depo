@@ -24,7 +24,31 @@
 13) Add 'Typescript', 'Use config files' then click 'Next'
 14) Use Vue 2.x, ESLint + AirBnb config
 15) Create and wait for project to be created
+16) Go into the project configuration and set the output directory to be '../wwwroot' as well as Disable Production Source Maps
+17) Then click 'Save changes'
 
+## 3 Configure the Web project to work with Vue
 
-
-5) Open the NuGet manager for the project
+1) Open the NuGet manager for the project
+2) Browse for 'VueCliMiddleware' and install it. See [here](https://github.com/EEParker/aspnetcore-vueclimiddleware) for configuration details
+3) create a 'wwwroot' folder
+4) Alter startup.cs with the following:
+```
+line 23: configuration.RootPath = "wwwroot"
+insert at line 49:
+				endpoints.MapToVueCliProxy(
+					"{*path}",
+					new SpaOptions { SourcePath = "clientapp" },
+					npmScript: (System.Diagnostics.Debugger.IsAttached) ? "serve" : null,
+					regex: "Compiled successfully",
+					forceKill: true
+				);
+```
+5) To prevent SSL issues with the npm proxy debuggin must be down without SSL. Edit launchSettings.json and remove the https part of the 'applicationUrl' entry
+6) Modify clientapp/vue.config.js by adding the following to the module.exports:
+```
+  devServer: {
+    host: '127.0.0.1'
+  }
+```
+7) Run the application and you should see the default vue project page come up
