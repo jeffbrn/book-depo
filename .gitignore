@@ -20,7 +20,6 @@ _ReSharper.Caches/
 
 # Node files/npm
 node_modules/
-*package-lock\.json
 
 # Make sure secrets arent checked in
 secrets.yaml
