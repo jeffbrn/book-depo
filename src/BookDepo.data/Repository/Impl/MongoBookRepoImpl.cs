@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using homelib.data.Common;
-using homelib.data.Entities;
+using BookRepo.data.Common;
+using BookRepo.data.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace homelib.data.Repository.Impl {
+namespace BookRepo.data.Repository.Impl {
 	public class MongoBookRepoImpl : IBookRepo {
 		private readonly IMongoCollection<Book> _repo;
 

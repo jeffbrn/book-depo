@@ -1,8 +1,8 @@
 ﻿using System;
-using homelib.data.Common;
+using BookRepo.data.Common;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace homelib.data.Entities {
+namespace BookRepo.data.Entities {
 	[CollectionName("aaaSystemConfig")]
 	[BsonIgnoreExtraElements(true)]
 	public class SystemConfig : EntityBase {

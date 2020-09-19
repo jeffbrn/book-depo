@@ -1,7 +1,7 @@
 ﻿using System;
 using BookRepo.data.Common;
 
-namespace DataLoader.Models.Config {
+namespace BookRepo.wwwMain.Models.Config {
 	public class DataSettings {
 		public MongoConnectionSettings Mongo { get; set; }
 	}

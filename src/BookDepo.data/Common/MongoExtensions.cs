@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using homelib.data.Entities;
+using BookRepo.data.Entities;
 using MongoDB.Driver;
 
-namespace homelib.data.Common {
+namespace BookRepo.data.Common {
 	public static class MongoExtensions {
 		public static IMongoDatabase GetConnection(this MongoConnectionSettings config) {
 			var client = new MongoClient(config.GetConnectionAddr());

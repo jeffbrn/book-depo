@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookDepo.data\BookRepo.data.csproj" />
     <ProjectReference Include="..\homelib.data\homelib.data.csproj" />
   </ItemGroup>
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using homelib.data.Entities;
+using BookRepo.data.Entities;
 using MongoDB.Driver;
 
-namespace homelib.data.Common {
+namespace BookRepo.data.Common {
 	public static class DatabaseConfiguration {
 		private static readonly Version _CURR_VERSION;
 

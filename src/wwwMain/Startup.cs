@@ -1,4 +1,5 @@
 ﻿using System;
+using BookRepo.wwwMain.Services.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices;
@@ -7,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VueCliMiddleware;
 
-namespace wwwMain {
+namespace BookRepo.wwwMain {
 	public class Startup {
 		public Startup(IConfiguration configuration) {
 			Configuration = configuration;
@@ -17,6 +18,8 @@ namespace wwwMain {
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
+			services.Config(Configuration);
+
 			services.AddControllersWithViews();
 
 			// In production, the React files will be served from this directory

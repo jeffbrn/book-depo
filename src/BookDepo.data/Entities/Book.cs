@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using homelib.data.Common;
+using BookRepo.data.Common;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace homelib.data.Entities {
+namespace BookRepo.data.Entities {
 	[CollectionName("books")]
 	[BsonIgnoreExtraElements(true)]
 	public class Book : EntityBase {

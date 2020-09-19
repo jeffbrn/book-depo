@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using homelib.data.Entities;
+using BookRepo.data.Entities;
 using MongoDB.Bson;
 
-namespace homelib.data.Repository {
+namespace BookRepo.data.Repository {
 	public interface IBookRepo {
 		Task<List<TModel>> GetAll<TModel>(Expression<Func<Book, TModel>> projection);
 
