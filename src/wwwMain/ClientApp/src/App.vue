@@ -1,36 +1,32 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">
-        Home
-      </router-link> |
-      <router-link to="/about">
-        About
-      </router-link>
+  <div id="app" class="bg-gray-200 font-sans leading-normal tracking-normal">
+    <page-header title="The Book Depository" sub-title="for the Brown family" />
+
+    <!--Container-->
+    <div class="container px-4 max-w-6xl mx-auto -mt-20">
+      <div class="mx-0 sm:mx-6">
+        <page-nav />
+
+        <router-view />
+      </div>
     </div>
-    <router-view />
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api';
+import PageHeader from './components/PageHeader.vue';
+import PageNav from './components/PageNav.vue';
 
-#nav {
-  padding: 30px;
-}
+export default defineComponent({
+  name: 'App',
+  components: {
+    PageHeader,
+    PageNav,
+  },
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  setup() {
+    return {};
+  },
+});
+</script>

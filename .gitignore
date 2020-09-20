@@ -20,6 +20,7 @@ _ReSharper.Caches/
 
 # Node files/npm
 node_modules/
+debug.log
 
 # Make sure secrets arent checked in
 secrets.yaml
