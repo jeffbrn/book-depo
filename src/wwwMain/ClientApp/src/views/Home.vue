@@ -38,7 +38,6 @@ export default defineComponent({
     });
 
     function showit(bid: string) {
-      console.log(`showit = ${bid}`);
       selnId.value = bid;
       showModal.value = true;
     }
