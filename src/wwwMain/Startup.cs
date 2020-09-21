@@ -52,7 +52,7 @@ namespace BookRepo.wwwMain {
 					"{*path}",
 					new SpaOptions { SourcePath = "clientapp" },
 					npmScript: (System.Diagnostics.Debugger.IsAttached) ? "serve" : null,
-					regex: "Compiled successfully",
+					regex: "App running at:",
 					forceKill: true
 				);
 			});
