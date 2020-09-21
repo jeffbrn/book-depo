@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueCompositionApi, { computed, ref } from '@vue/composition-api';
 import ApiService from '@/common/services/api-service';
 import BookSumm from '@/common/types/booksumm';
+import BookDetails from '@/common/types/bookdetails';
 
 Vue.use(VueCompositionApi);
 
@@ -26,10 +27,16 @@ async function loadBooks() {
 
 const getBooks = computed(() => listState);
 
+async function getBook(id: string): Promise<BookDetails> {
+  const response = await api.getDetails(id);
+  return response.data;
+}
+
 const BookStore = {
   setBooks,
   loadBooks,
   getBooks,
+  getBook,
 };
 
 export default BookStore;

@@ -9,30 +9,45 @@
                   v-for="b in bookList"
                   :book-id="b.id"
                   :key="b.id"
+                  @details="showit"
       />
     </div>
+    <book-details :show-details="showModal" @close="showModal = false" :book-id="selnId" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from '@vue/composition-api';
+import { defineComponent, onMounted, ref } from '@vue/composition-api';
 import BookCover from '@/components/BookCover.vue';
+import BookDetails from '@/components/BookDetails.vue';
 import BookStore from '../common/store/book-store';
 
 export default defineComponent({
   name: 'Home',
   components: {
     BookCover,
+    BookDetails,
   },
   setup() {
     const bookList = BookStore.getBooks.value;
+    const showModal = ref(false);
+    const selnId = ref('');
 
     onMounted(async () => {
       await BookStore.loadBooks();
     });
 
+    function showit(bid: string) {
+      console.log(`showit = ${bid}`);
+      selnId.value = bid;
+      showModal.value = true;
+    }
+
     return {
       bookList,
+      showit,
+      showModal,
+      selnId,
     };
   },
 });
