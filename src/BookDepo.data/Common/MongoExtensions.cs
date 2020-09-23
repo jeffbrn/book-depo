@@ -16,7 +16,7 @@ namespace BookRepo.data.Common {
 
 		private static string GetConnectionAddr(this MongoConnectionSettings config) => $"mongodb://{config.ServerAddr}";
 
-		private static string GetCollectionName<TEntity>() where TEntity : EntityBase {
+		public static string GetCollectionName<TEntity>() where TEntity : EntityBase {
 			var type = typeof(TEntity);
 			var nameOverride = type.GetCustomAttributes<CollectionNameAttribute>().FirstOrDefault();
 			if (nameOverride != null) return nameOverride.CollectionName;

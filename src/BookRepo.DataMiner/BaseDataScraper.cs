@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using BookRepo.data.Entities.Children;
 using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
 
@@ -8,11 +9,11 @@ namespace BookRepo.DataMiner {
 	public abstract class BaseDataScraper : IDataScraper {
 		private HtmlDocument _html;
 
-		public async Task<BookData> GetData(string bookIsbn) {
+		public async Task<SiteData> GetData(string bookIsbn) {
 			var url = BookDataUrl.Replace("{ISBN}", bookIsbn);
 			var web = new HtmlWeb();
 			_html = await web.LoadFromWebAsync(url);
-			var retval = new BookData { RawHtml = _html.ParsedText };
+			var retval = new SiteData { RawHtml = _html.ParsedText };
 			retval.Title = QueryDoc(TitleQuery);
 			retval.Author = QueryDoc(AuthorQuery);
 			retval.DatePublished = QueryDoc(DatePublishedQuery);

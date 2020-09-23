@@ -15,7 +15,7 @@ namespace BookRepo.data.Entities {
 		public string Publisher { get; set; }
 		public int? NumPages { get; set; }
 		public string Description { get; set; }
-		public List<string> Subjects { get; set; } = new List<string>();
+		public List<string> Tags { get; set; } = new List<string>();
 		public List<byte> Cover { get; set; }
 	}
 }

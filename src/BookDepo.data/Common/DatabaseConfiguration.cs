@@ -24,6 +24,17 @@ namespace BookRepo.data.Common {
 				dbVers = Version.Parse("0.1.00906.1");
 			}
 
+			if (dbVers < Version.Parse("0.1.00923.1")) {
+				var bookDataColl = db.GetEntityCollection<ExtnBookData>();
+				var bookDataIdx = new CreateIndexModel<ExtnBookData>(
+					Builders<ExtnBookData>.IndexKeys.Ascending(x => x.Isbn).Descending(x => x.ImportedOn),
+					new CreateIndexOptions { Name = "Book_Isbn_Idx" });
+				bookDataColl.Indexes.CreateOne(bookDataIdx);
+				dbVers = Version.Parse("0.1.00923.1");
+
+				db.DropCollection(MongoExtensions.GetCollectionName<Book>());
+			}
+
 			UpdateSchemaVersion(db, dbVers);
 		}
 

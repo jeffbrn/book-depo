@@ -1,7 +1,7 @@
 ﻿using System;
 
-namespace BookRepo.DataMiner {
-	public class BookData {
+namespace BookRepo.data.Entities.Children {
+	public class SiteData {
 		public string Title { get; set; }
 		public string Author { get; set; }
 		public string DatePublished { get; set; }
