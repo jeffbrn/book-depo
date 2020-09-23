@@ -30,6 +30,22 @@
 			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Laptop"
 			}
+		},
+		"Desktop1": {
+			"commandName": "Project",
+			"launchBrowser": true,
+			"applicationUrl": "http://localhost:5000",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Desktop1"
+			}
+		},
+		"Desktop2": {
+			"commandName": "Project",
+			"launchBrowser": true,
+			"applicationUrl": "http://localhost:5000",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Desktop2"
+			}
 		}
   }
 }
