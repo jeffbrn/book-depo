@@ -32,6 +32,8 @@ namespace BookRepo.DataMiner {
 
 		protected abstract string AuthorQuery { get; }
 
+		protected abstract string Publisher { get; }
+
 		protected abstract string DatePublishedQuery { get; }
 
 		protected abstract string NumPagesQuery { get; }
@@ -43,11 +45,13 @@ namespace BookRepo.DataMiner {
 		private void ParseHtml(SiteData data) {
 			data.Title = QueryDoc(TitleQuery);
 			data.Author = QueryDoc(AuthorQuery);
+			data.Publisher = QueryDoc(Publisher);
 			data.DatePublished = QueryDoc(DatePublishedQuery);
 			var np = QueryDoc(NumPagesQuery);
 			if (np != null & int.TryParse(np, out var tmpint)) data.NumPages = tmpint;
 			data.Description = QueryDoc(DescriptionQuery);
 			data.CoverImageUrl = QueryDoc(CoverImgQuery);
+			if (string.IsNullOrWhiteSpace(data.CoverImageUrl)) data.CoverImageUrl = null;
 			if (data.CoverImageUrl != null && data.CoverImageUrl.StartsWith("//")) data.CoverImageUrl = $"https:{data.CoverImageUrl}";
 		}
 

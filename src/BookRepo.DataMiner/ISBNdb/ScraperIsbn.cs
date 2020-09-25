@@ -14,6 +14,9 @@ namespace BookRepo.DataMiner.ISBNdb {
 		protected override string AuthorQuery { get; } = null;
 
 		/// <inheritdoc />
+		protected override string Publisher { get; } = null;
+
+		/// <inheritdoc />
 		protected override string DatePublishedQuery { get; } = null;
 
 		/// <inheritdoc />

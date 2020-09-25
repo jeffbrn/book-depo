@@ -40,6 +40,10 @@ namespace BookRepo.Data.Repository.Impl {
 		/// <inheritdoc />
 		public async Task StoreRawData(ExtnBookData data) => await _rawColl.InsertOneAsync(data);
 
+		/// <inheritdoc />
+		public async Task<List<TModel>> GetAllRaw<TModel>(Expression<Func<ExtnBookData, TModel>> projection) =>
+			await _rawColl.Find(x => true).Project(projection).ToListAsync();
+
 		#endregion
 	}
 }

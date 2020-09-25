@@ -18,5 +18,7 @@ namespace BookRepo.Data.Repository {
 		Task<ExtnBookData> GetRawData(string isbn);
 
 		Task StoreRawData(ExtnBookData data);
+
+		Task<List<TModel>> GetAllRaw<TModel>(Expression<Func<ExtnBookData, TModel>> projection);
 	}
 }

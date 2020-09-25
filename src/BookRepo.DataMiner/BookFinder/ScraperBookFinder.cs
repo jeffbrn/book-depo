@@ -14,6 +14,9 @@ namespace BookRepo.DataMiner.BookFinder {
 		protected override string AuthorQuery { get; } = "span[itemprop=author]|.text";
 
 		/// <inheritdoc />
+		protected override string Publisher { get; } = "span[itemprop=publisher]|.text";
+
+		/// <inheritdoc />
 		protected override string DatePublishedQuery { get; } = null;
 
 		/// <inheritdoc />

@@ -15,6 +15,9 @@ namespace BookRepo.DataMiner.OpenLibrary {
 		protected override string AuthorQuery { get; } = "a[itemprop=author]|.text";
 
 		/// <inheritdoc />
+		protected override string Publisher { get; } = "a[itemprop=publisher]|.text";
+
+		/// <inheritdoc />
 		protected override string DatePublishedQuery { get; } = "strong[itemprop=datePublished]|.text";
 
 		/// <inheritdoc />
