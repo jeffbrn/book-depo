@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BookRepo.data.Common {
+namespace BookRepo.Data.Common {
 	[AttributeUsage(AttributeTargets.Class)]
 	public class CollectionNameAttribute : Attribute {
 		public CollectionNameAttribute(string collectionName) {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using BookRepo.data.Entities;
+using BookRepo.Data.Entities;
 using MongoDB.Driver;
 
-namespace BookRepo.data.Common {
+namespace BookRepo.Data.Common {
 	public static class DatabaseConfiguration {
 		private static readonly Version _CURR_VERSION;
 
@@ -30,9 +30,15 @@ namespace BookRepo.data.Common {
 					Builders<ExtnBookData>.IndexKeys.Ascending(x => x.Isbn).Descending(x => x.ImportedOn),
 					new CreateIndexOptions { Name = "Book_Isbn_Idx" });
 				bookDataColl.Indexes.CreateOne(bookDataIdx);
-				dbVers = Version.Parse("0.1.00923.1");
 
 				db.DropCollection(MongoExtensions.GetCollectionName<Book>());
+				var bookColl = db.GetEntityCollection<Book>();
+				var bookIdx = new CreateIndexModel<Book>(Builders<Book>.IndexKeys.Ascending(x => x.Isbn), new CreateIndexOptions { Name = "Book_Isbn_Idx", Unique = true });
+				bookColl.Indexes.CreateOne(bookIdx);
+				bookIdx = new CreateIndexModel<Book>(Builders<Book>.IndexKeys.Ascending(x => x.CreatedOn), new CreateIndexOptions { Name = "Book_CreatedOn_Idx", Unique = false });
+				bookColl.Indexes.CreateOne(bookIdx);
+
+				dbVers = Version.Parse("0.1.00923.1");
 			}
 
 			UpdateSchemaVersion(db, dbVers);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BookRepo.data.Entities.Children;
+using BookRepo.Data.Entities.Children;
 using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
 
@@ -9,19 +9,21 @@ namespace BookRepo.DataMiner {
 	public abstract class BaseDataScraper : IDataScraper {
 		private HtmlDocument _html;
 
+		/// <inheritdoc />
 		public async Task<SiteData> GetData(string bookIsbn) {
 			var url = BookDataUrl.Replace("{ISBN}", bookIsbn);
 			var web = new HtmlWeb();
 			_html = await web.LoadFromWebAsync(url);
 			var retval = new SiteData { RawHtml = _html.ParsedText };
-			retval.Title = QueryDoc(TitleQuery);
-			retval.Author = QueryDoc(AuthorQuery);
-			retval.DatePublished = QueryDoc(DatePublishedQuery);
-			var np = QueryDoc(NumPagesQuery);
-			if (np != null & int.TryParse(np, out var tmpint)) retval.NumPages = tmpint;
-			retval.Description = QueryDoc(DescriptionQuery);
-			retval.CoverImageUrl = QueryDoc(CoverImgQuery);
+			ParseHtml(retval);
 			return retval;
+		}
+
+		/// <inheritdoc />
+		public void Reparse(SiteData data) {
+			_html = new HtmlDocument();
+			_html.LoadHtml(data.RawHtml);
+			ParseHtml(data);
 		}
 
 		protected abstract string BookDataUrl { get; } 
@@ -38,12 +40,23 @@ namespace BookRepo.DataMiner {
 
 		protected abstract string CoverImgQuery { get; }
 
+		private void ParseHtml(SiteData data) {
+			data.Title = QueryDoc(TitleQuery);
+			data.Author = QueryDoc(AuthorQuery);
+			data.DatePublished = QueryDoc(DatePublishedQuery);
+			var np = QueryDoc(NumPagesQuery);
+			if (np != null & int.TryParse(np, out var tmpint)) data.NumPages = tmpint;
+			data.Description = QueryDoc(DescriptionQuery);
+			data.CoverImageUrl = QueryDoc(CoverImgQuery);
+			if (data.CoverImageUrl != null && data.CoverImageUrl.StartsWith("//")) data.CoverImageUrl = $"https:{data.CoverImageUrl}";
+		}
+
 		private string QueryDoc(string query) {
 			if (query == null) return null;
 			var parse = query.Split('|');
 			var selector = parse[0];
 			var multi = parse[1].EndsWith("[]");
-			var attrib = multi ? parse[1].Substring(0, parse[1].Length - 2) : parse[1];
+			var attrib = multi ? parse[1][0..^2] : parse[1];
 			if (attrib.Equals(".text")) attrib = null;
 			return multi ? QueryDocMultiNode(selector, attrib) : QueryDocSingleNode(selector, attrib);
 		}
@@ -65,7 +78,7 @@ namespace BookRepo.DataMiner {
 			if ((nodes?.Count ?? 0) == 0) return null;
 			var vals = nodes.Select(n => attribName == null ? n.InnerText ?? "" : n.Attributes[attribName]?.Value ?? "").Select(t => t.Trim());
 			var retval = string.Join(" ", vals).Trim();
-			return retval.Equals("") ? null : retval;
+			return retval.Length == 0 ? null : retval;
 		}
 	}
 }

@@ -1,8 +1,8 @@
 ﻿using System;
-using BookRepo.data.Common;
-using BookRepo.data.Entities.Children;
+using BookRepo.Data.Common;
+using BookRepo.Data.Entities.Children;
 
-namespace BookRepo.data.Entities {
+namespace BookRepo.Data.Entities {
 	[CollectionName("raw-data")]
 	public class ExtnBookData : EntityBase {
 		public string Isbn { get; set; }

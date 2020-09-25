@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BookRepo.data.Entities.Children {
+namespace BookRepo.Data.Entities.Children {
 	public class SiteData {
 		public string Title { get; set; }
 		public string Author { get; set; }
