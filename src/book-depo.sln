@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wwwMain", "wwwMain\wwwMain.csproj", "{11AA51ED-4D7B-4839-81FC-B56D4E139C8C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookRepo.data", "BookDepo.data\BookRepo.data.csproj", "{E64D1105-20AD-457F-BE11-30B7B17125F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookRepo.Data", "BookDepo.Data\BookRepo.Data.csproj", "{E64D1105-20AD-457F-BE11-30B7B17125F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookRepo.DataMiner", "BookRepo.DataMiner\BookRepo.DataMiner.csproj", "{416B6FDB-9B9F-4A30-A527-2F6ED6555260}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E64D1105-20AD-457F-BE11-30B7B17125F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E64D1105-20AD-457F-BE11-30B7B17125F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E64D1105-20AD-457F-BE11-30B7B17125F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{416B6FDB-9B9F-4A30-A527-2F6ED6555260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{416B6FDB-9B9F-4A30-A527-2F6ED6555260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{416B6FDB-9B9F-4A30-A527-2F6ED6555260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{416B6FDB-9B9F-4A30-A527-2F6ED6555260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

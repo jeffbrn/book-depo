@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using BookRepo.data.Common;
+using BookRepo.Data.Common;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BookRepo.data.Entities {
+namespace BookRepo.Data.Entities {
 	[CollectionName("books")]
 	[BsonIgnoreExtraElements(true)]
 	public class Book : EntityBase {
+		public DateTime CreatedOn { get; set; }
 		public string Isbn { get; set; }
 		public string Title { get; set; }
 		public string Author { get; set; }
@@ -15,7 +16,7 @@ namespace BookRepo.data.Entities {
 		public string Publisher { get; set; }
 		public int? NumPages { get; set; }
 		public string Description { get; set; }
-		public List<string> Subjects { get; set; } = new List<string>();
+		public List<string> Tags { get; set; } = new List<string>();
 		public List<byte> Cover { get; set; }
 	}
 }

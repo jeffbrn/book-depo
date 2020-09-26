@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
-using BookRepo.data.Common;
-using BookRepo.data.Entities;
+using System.Threading.Tasks;
+using BookRepo.Data.Common;
+using BookRepo.Data.Entities;
+using BookRepo.Data.Entities.Children;
+using BookRepo.Data.Repository;
+using BookRepo.DataMiner;
+using DataLoader.Models.Books;
 using DataLoader.Models.Config;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Newtonsoft.Json.Linq;
 
 namespace DataLoader.Application {
 	public class Startup : IStartup {
-		private readonly IMongoCollection<Book> _bookColl;
 		private readonly ILogger _log;
 		private readonly AppSettings _settings;
+		private readonly IBookRepo _repo;
 
-		public Startup(ILogger<Startup> log, IOptions<AppSettings> config, IMongoDatabase db) {
+		public Startup(ILogger<Startup> log, IOptions<AppSettings> config, IMongoDatabase db, IBookRepo repo) {
 			_log = log;
 			_settings = config.Value;
 			db.CheckSchema();
-			_bookColl = db.GetEntityCollection<Book>();
+			_repo = repo;
 		}
 
 		#region Implementation of IStartup
@@ -30,32 +33,39 @@ namespace DataLoader.Application {
 		public void Run(CancellationToken cancel) {
 			//var wait = Task.Delay(10000, cancel);
 			//wait.Wait(cancel);
-			var dataDir = new DirectoryInfo(_settings.DataSrcDir);
-			if (!dataDir.Exists) {
-				throw new ApplicationException($"Data directory {_settings.DataSrcDir} does not exist");
-			}
+			Task.Run(async () => {
+				var dataDir = new DirectoryInfo(_settings.DataSrcDir);
+				if (!dataDir.Exists) {
+					throw new ApplicationException($"Data directory {_settings.DataSrcDir} does not exist");
+				}
 
-			foreach (var isbnDir in dataDir.EnumerateDirectories()) {
-				_log.LogInformation("Directory found: {0}", isbnDir.Name);
-				// check to see if book already exists
-				if (_bookColl.Find(x => x.Isbn.Equals(isbnDir.Name)).Project(x => x.Isbn).FirstOrDefault() != null) continue;
-				var book = LoadBook(isbnDir);
-				_bookColl.InsertOne(book);
-			}
+				var loadedRaw = new List<ExtnBookData>();
+				foreach (var isbnDir in dataDir.EnumerateDirectories()) {
+					_log.LogInformation("Directory found: {0}", isbnDir.Name);
+					// check to see if book already exists
+					var raw = await _repo.GetRawData(isbnDir.Name);
+					if (raw != null) continue;
+					_log.LogInformation("New book data, parsing and loading: {0}", isbnDir.Name);
+					raw = await LoadBook(isbnDir);
+					loadedRaw.Add(raw);
+				}
+
+				foreach (var rawBook in loadedRaw) {
+					var chk = await _repo.GetOne(rawBook.Isbn, BookIsbn.GetMap());
+					if (chk != null) continue;
+					_log.LogInformation("Parsing raw data to load book {0}", rawBook.Isbn);
+					var bk = await DataScraperFactory.CreateBook(rawBook);
+					await _repo.Insert(bk);
+				}
+			}, cancel).Wait(cancel);
 
 			_log.LogWarning("Task finished.");
 		}
 
 		#endregion
 
-		private Book LoadBook(DirectoryInfo bookDir) {
-			var retval = new Book {Isbn = bookDir.Name};
-			var cover = bookDir.EnumerateFiles().FirstOrDefault(f =>
-				f.Extension.ToLowerInvariant().Equals(".jpg") || f.Extension.ToLowerInvariant().Equals(".jepg"));
-			if (cover != null) {
-				retval.Cover = new List<byte>(File.ReadAllBytes(cover.FullName));
-			}
-
+		private async Task<ExtnBookData> LoadBook(DirectoryInfo bookDir) {
+			var raw = new ExtnBookData { Isbn = bookDir.Name, ImportedOn = DateTime.UtcNow };
 			var opt = new EnumerationOptions {
 				IgnoreInaccessible = true,
 				MatchCasing = MatchCasing.CaseInsensitive,
@@ -63,47 +73,26 @@ namespace DataLoader.Application {
 				RecurseSubdirectories = false,
 				ReturnSpecialDirectories = false
 			};
-			foreach (var dataFile in bookDir.EnumerateFiles("data*.json", opt)) {
+			foreach (var dataFile in bookDir.EnumerateFiles("*.raw", opt)) {
 				using var dataStr = dataFile.OpenText();
-				var jsonRaw = dataStr.ReadToEnd();
-				ReadJson(jsonRaw, retval);
-			}
-
-			return retval;
-		}
-
-		private void ReadJson(string rawJson, Book result) {
-			var json = JObject.Parse(rawJson);
-			result.Title ??= ReadValue(json, "details", "title", "value");
-			result.Author ??= ReadValue(json, "details", "author", "value");
-			if (result.PublishedOnRaw == null) {
-				result.PublishedOnRaw = ReadValue(json, "details", "publishInfo", "date", "value");
-				if (result.PublishedOnRaw != null) {
-					result.PublishedOn ??= DateTime.TryParse(result.PublishedOnRaw, out var dt) ? dt : (DateTime?)null;
+				var htmlRaw = await dataStr.ReadToEndAsync();
+				switch (dataFile.Name.ToLowerInvariant()) {
+					case "bookfinder.raw":
+						raw.BookFinder = new SiteData {RawHtml = htmlRaw};
+						break;
+					case "isbndb.raw":
+						raw.IsbnDb = new SiteData { RawHtml = htmlRaw };
+						break;
+					case "openlibrary.raw":
+						raw.OpenLibrary = new SiteData { RawHtml = htmlRaw };
+						break;
 				}
 			}
 
-			result.Publisher ??= ReadValue(json, "details", "publishInfo", "publisher", "value");
-			result.NumPages ??= Convert.ToInt32(ReadValue(json, "details", "numPages", "value"));
-			result.Description ??= ReadValue(json, "details", "description", "value");
+			DataScraperFactory.ReparseBookData(raw);
+			await _repo.StoreRawData(raw);
+			return raw;
 		}
 
-		private string ReadValue(JToken json, params string[] path) {
-			if (json == null) {
-				return null;
-			}
-
-			if (path.Length == 0) {
-				return null;
-			}
-
-			var nxtJson = json[path[0]];
-			if (path.Length == 1) {
-				return (string)nxtJson;
-			}
-
-			var nxtPath = path.Skip(1).ToArray();
-			return ReadValue(nxtJson, nxtPath);
-		}
 	}
 }

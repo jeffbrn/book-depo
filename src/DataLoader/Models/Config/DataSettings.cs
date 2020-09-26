@@ -1,5 +1,5 @@
 ﻿using System;
-using BookRepo.data.Common;
+using BookRepo.Data.Common;
 
 namespace DataLoader.Models.Config {
 	public class DataSettings {

@@ -1,7 +1,7 @@
 ﻿using System;
-using BookRepo.data.Common;
-using BookRepo.data.Repository;
-using BookRepo.data.Repository.Impl;
+using BookRepo.Data.Common;
+using BookRepo.Data.Repository;
+using BookRepo.Data.Repository.Impl;
 using BookRepo.wwwMain.Models.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

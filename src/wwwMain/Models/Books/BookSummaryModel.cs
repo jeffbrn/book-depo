@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using BookRepo.data.Entities;
+using BookRepo.Data.Entities;
 
 namespace BookRepo.wwwMain.Models.Books {
 	public class BookSummaryModel {

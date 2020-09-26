@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
 // In SDK-style projects such as this one, several assembly attributes that were historically
@@ -24,5 +24,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.00906.1")]
-[assembly: AssemblyFileVersion("0.1.00906.1")]
+[assembly: AssemblyVersion("0.1.00923.1")]
+[assembly: AssemblyFileVersion("0.1.00923.1")]

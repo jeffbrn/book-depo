@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using BookRepo.data.Repository;
+using BookRepo.Data.Repository;
 using BookRepo.wwwMain.Models.Books;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

@@ -9,9 +9,15 @@
     <None Remove="appsettings.Desktop.json" />
     <None Remove="appsettings.Development.json" />
     <None Remove="appsettings.json" />
+    <None Remove="appsettings.Laptop.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="appsettings.Laptop.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="appsettings.Desktop.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -41,7 +47,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookDepo.data\BookRepo.data.csproj" />
+    <ProjectReference Include="..\BookDepo.data\BookRepo.Data.csproj" />
+    <ProjectReference Include="..\BookRepo.DataMiner\BookRepo.DataMiner.csproj" />
   </ItemGroup>
 
 </Project>

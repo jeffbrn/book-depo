@@ -4,7 +4,9 @@ using DataLoader.Models.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using BookRepo.data.Common;
+using BookRepo.Data.Common;
+using BookRepo.Data.Repository;
+using BookRepo.Data.Repository.Impl;
 
 namespace DataLoader.Application {
 	public class DataLoaderApp : ConsoleAppBase {
@@ -14,6 +16,7 @@ namespace DataLoader.Application {
 		protected override void RegisterServices(IServiceCollection services) {
 			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 			services.AddScoped(c => c.GetService<IOptions<AppSettings>>().Value.Services.Data.Mongo.GetConnection());
+			services.AddScoped<IBookRepo, MongoBookRepoImpl>();
 		}
 
 		protected override void OnBeforeRun() {
