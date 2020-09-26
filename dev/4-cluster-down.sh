@@ -1,9 +1,9 @@
 #!/bin/bash
 
-docker network disconnect k3d-homelib registry.localhost
+docker network disconnect k3d-bookrepo registry.localhost
 
-k3d cluster delete homelib
-rm -r /tmp/homelib
+k3d cluster delete bookrepo
+rm -r /tmp/bookrepo
 
 docker container stop registry.localhost
 docker container rm registry.localhost

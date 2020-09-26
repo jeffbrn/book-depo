@@ -30,4 +30,7 @@ docker push registry.localhost:5000/$JOB_IMG:$RUN_ENV
 
 kubectl apply -f ./k8s/dataloader-job.yaml
 kubectl wait --for=condition=complete --timeout=60s job/dataloader
+jobpod=$(kubectl get pods --selector=job-name=dataloader --output=jsonpath='{.items[*].metadata.name}')
+echo $jobpod
+kubectl logs $jobpod
 kubectl delete job/dataloader
