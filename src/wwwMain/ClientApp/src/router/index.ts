@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../views/Home.vue';
+import Details from '../views/Details.vue';
 
 Vue.use(VueRouter);
 
@@ -9,6 +10,11 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/details/:bookId',
+    name: 'Details',
+    component: Details,
   },
   {
     path: '/about',
@@ -21,7 +27,13 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  console.log(to);
+  next();
 });
 
 export default router;

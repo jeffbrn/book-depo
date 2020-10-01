@@ -19,13 +19,14 @@ export default defineComponent({
       bookId: String,
     },
   },
-  setup(props) {
+  setup(props, ctx) {
     function bookCoverSrc() {
       return (typeof props.bookId === 'undefined') ? '' : `/api/book/${props.bookId}/cover`;
     }
 
     function details(this: any) {
-      this.$emit('details', props.bookId);
+      // this.$emit('details', props.bookId);
+      ctx.root.$router.push({ path: `details/${props.bookId}` });
     }
 
     return {
