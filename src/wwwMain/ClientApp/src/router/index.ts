@@ -30,10 +30,10 @@ const router = new VueRouter({
   mode: 'history',
   routes,
 });
-
+/*
 router.beforeEach((to, from, next) => {
   console.log(to);
   next();
 });
-
+*/
 export default router;
