@@ -17,7 +17,7 @@
             <div class="flex flex-col">
               <img :src="bookCoverSrc()" alt="Book Cover" class="h-64 w-full rounded-t" @click="details">
               <div class="w-fill content-center">
-                <button class="border rounded shadow w-10 bg-teal-400 text-white focus:outline-none hover:bg-teal-500 focus:bg-teal-500">
+                <button class="border rounded shadow w-10 bg-teal-400 text-white focus:outline-none hover:bg-teal-500 focus:bg-teal-500" @click="showFieldDetails">
                   <font-awesome-icon :icon="[ 'fas', 'pencil-alt' ]" />
                 </button>
               </div>
@@ -77,11 +77,14 @@
                 Description
               </div>
               <div>
-                <textarea v-model="details.description" :class="inputStyle" readonly rows="6"></textarea>
+                <textarea v-model="details.description" :class="inputStyle" readonly rows="6" />
               </div>
             </div>
           </div>
         </div>
+        <field-details :show-it="detailsShow" title="Cover Data" @close="closeFieldDetails">
+          field details!
+        </field-details>
       </div>
     </div>
   </div>
@@ -89,11 +92,13 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from '@vue/composition-api';
+import FieldDetails from '@/components/FieldDetails.vue';
 import BookDetails from '../common/types/bookdetails';
 import BookStore from '../common/store/book-store';
 
 export default defineComponent({
   name: 'Home',
+  components: { FieldDetails },
   setup(props, ctx) {
     const route = ctx.root.$route;
     const details = ref(new BookDetails());
@@ -102,6 +107,8 @@ export default defineComponent({
     const inputStyle = ref(['w-full', 'border', 'rounded', 'py-2', 'px-4', 'text-sm', 'bg-gray-100', 'text-gray-700', 'border-gray-300']);
     const inputNumStyle = ref(['w-32', 'border', 'rounded', 'py-2', 'px-4', 'text-sm', 'bg-gray-100', 'text-gray-700', 'border-gray-300']);
     const publishedDate = ref('');
+
+    const detailsShow = ref(false);
 
     const { bookId } = route.params;
 
@@ -119,6 +126,14 @@ export default defineComponent({
       return `/api/book/${bookId}/cover`;
     }
 
+    function showFieldDetails() {
+      detailsShow.value = true;
+    }
+
+    function closeFieldDetails() {
+      detailsShow.value = false;
+    }
+
     return {
       details,
       loading,
@@ -127,6 +142,9 @@ export default defineComponent({
       inputStyle,
       inputNumStyle,
       publishedDate,
+      detailsShow,
+      showFieldDetails,
+      closeFieldDetails,
     };
   },
 });

@@ -20,6 +20,5 @@ module.exports = {
   },
   variants: {},
   plugins: [
-    require('@tailwindcss/typography'),
   ],
 };
