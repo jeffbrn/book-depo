@@ -1,17 +1,28 @@
 export default class SiteBookData {
-  public Title: string;
+  public title: string;
 
-  public Author: string;
+  public author: string;
 
-  public Publisher: string;
+  public publisher: string;
 
-  public DatePublished: string;
+  public datePublished: string;
 
-  public NumPages: number | null;
+  public numPages: number | null;
 
-  public Description: string;
+  public description: string;
 
-  public CoverImageUrl: string;
+  public coverImageUrl: string;
 
-  public RawHtml: string;
+  public rawHtml: string;
+
+  constructor() {
+    this.title = '';
+    this.author = '';
+    this.publisher = '';
+    this.datePublished = '';
+    this.numPages = null;
+    this.description = '';
+    this.coverImageUrl = '';
+    this.rawHtml = '';
+  }
 }

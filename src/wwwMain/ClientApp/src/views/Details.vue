@@ -112,6 +112,7 @@ export default defineComponent({
   components: { FieldDetails },
   setup(props, ctx) {
     const route = ctx.root.$route;
+    const { filters } = ctx.root.$options;
     const details = ref(new BookDetails());
     const raw = ref(new RawBookData());
     const loading = ref(true);
@@ -127,7 +128,7 @@ export default defineComponent({
       if (details.value.publishedOn === null) {
         publishedDate.value = details.value.publishedOnRaw;
       } else {
-        publishedDate.value = ctx.root.$options.filters.dateFormatter(details.value.publishedOn);
+        publishedDate.value = filters?.dateFormatter(details.value.publishedOn) ?? '';
       }
       raw.value = await BookStore.getBookRawData(details.value.isbn);
       loading.value = false;

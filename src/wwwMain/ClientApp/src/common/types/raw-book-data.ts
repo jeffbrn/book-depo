@@ -1,13 +1,21 @@
 import SiteBookData from './site-book-data';
 
 export default class RawBookData {
-  public Isbn: string;
+  public isbn: string;
 
-  public ImportedOn: Date;
+  public importedOn: Date;
 
-  public BookFinder: SiteBookData;
+  public bookFinder: SiteBookData | null;
 
-  public IsbnDb: SiteBookData;
+  public isbnDb: SiteBookData | null;
 
-  public OpenLibrary: SiteBookData;
+  public openLibrary: SiteBookData | null;
+
+  constructor() {
+    this.isbn = '';
+    this.importedOn = new Date();
+    this.bookFinder = null;
+    this.isbnDb = null;
+    this.openLibrary = null;
+  }
 }
