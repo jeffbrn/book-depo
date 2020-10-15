@@ -76,7 +76,7 @@
 import {
   defineComponent, ref, onBeforeUpdate,
 } from '@vue/composition-api';
-import BookDetails from '../common/types/bookdetails';
+import BookDetails from '../common/types/book-details';
 import BookStore from '../common/store/book-store';
 import Modal from './base/Modal.vue';
 

@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import BookSumm from '@/common/types/booksumm';
-import BookDetails from '@/common/types/bookdetails';
+import BookSumm from '@/common/types/book-summ';
+import BookDetails from '@/common/types/book-details';
+import RawBookData from '@/common/types/raw-book-data';
 
 const http: AxiosInstance = axios.create();
 
@@ -17,9 +18,14 @@ function bookApi() {
     return http.get(`${url}/${bid}`);
   }
 
+  async function getRawData(isbn: string): Promise<AxiosResponse<RawBookData>> {
+    return http.get(`${url}/${isbn}/raw`);
+  }
+
   return {
     getAll,
     getDetails,
+    getRawData,
   };
 }
 

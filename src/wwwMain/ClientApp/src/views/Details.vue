@@ -17,7 +17,7 @@
             <div class="flex flex-col">
               <img :src="bookCoverSrc()" alt="Book Cover" class="h-64 w-full rounded-t" @click="details">
               <div class="w-fill content-center">
-                <button class="border rounded shadow w-10 bg-teal-400 text-white focus:outline-none hover:bg-teal-500 focus:bg-teal-500" @click="showFieldDetails">
+                <button class="border rounded shadow w-10 bg-teal-400 text-white focus:outline-none hover:bg-teal-500 focus:bg-teal-500" @click="coverDetailsShow">
                   <font-awesome-icon :icon="[ 'fas', 'pencil-alt' ]" />
                 </button>
               </div>
@@ -82,8 +82,18 @@
             </div>
           </div>
         </div>
-        <field-details :show-it="detailsShow" title="Cover Data" @close="closeFieldDetails">
-          field details!
+        <field-details :show-it="coverDetailsVisible" title="Cover Data" @close="coverDetailsClose">
+          <div class="flex flex-row">
+            <div class="mx-4 my-2">
+              Cover 1
+            </div>
+            <div class="mx-4 my-2">
+              Cover 2
+            </div>
+            <div class="mx-4 my-2">
+              Cover 3
+            </div>
+          </div>
         </field-details>
       </div>
     </div>
@@ -93,8 +103,9 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from '@vue/composition-api';
 import FieldDetails from '@/components/FieldDetails.vue';
-import BookDetails from '../common/types/bookdetails';
+import BookDetails from '../common/types/book-details';
 import BookStore from '../common/store/book-store';
+import RawBookData from '../common/types/raw-book-data';
 
 export default defineComponent({
   name: 'Home',
@@ -102,13 +113,12 @@ export default defineComponent({
   setup(props, ctx) {
     const route = ctx.root.$route;
     const details = ref(new BookDetails());
+    const raw = ref(new RawBookData());
     const loading = ref(true);
     const labelStyle = ref(['text-xs', 'text-blue-400', 'mt-6']);
     const inputStyle = ref(['w-full', 'border', 'rounded', 'py-2', 'px-4', 'text-sm', 'bg-gray-100', 'text-gray-700', 'border-gray-300']);
     const inputNumStyle = ref(['w-32', 'border', 'rounded', 'py-2', 'px-4', 'text-sm', 'bg-gray-100', 'text-gray-700', 'border-gray-300']);
     const publishedDate = ref('');
-
-    const detailsShow = ref(false);
 
     const { bookId } = route.params;
 
@@ -119,6 +129,7 @@ export default defineComponent({
       } else {
         publishedDate.value = ctx.root.$options.filters.dateFormatter(details.value.publishedOn);
       }
+      raw.value = await BookStore.getBookRawData(details.value.isbn);
       loading.value = false;
     });
 
@@ -126,12 +137,13 @@ export default defineComponent({
       return `/api/book/${bookId}/cover`;
     }
 
-    function showFieldDetails() {
-      detailsShow.value = true;
+    const coverDetailsVisible = ref(false);
+    function coverDetailsShow() {
+      coverDetailsVisible.value = true;
     }
-
-    function closeFieldDetails() {
-      detailsShow.value = false;
+    function coverDetailsClose(doUpdate: any) {
+      console.log(doUpdate);
+      coverDetailsVisible.value = false;
     }
 
     return {
@@ -142,9 +154,9 @@ export default defineComponent({
       inputStyle,
       inputNumStyle,
       publishedDate,
-      detailsShow,
-      showFieldDetails,
-      closeFieldDetails,
+      coverDetailsVisible,
+      coverDetailsShow,
+      coverDetailsClose,
     };
   },
 });

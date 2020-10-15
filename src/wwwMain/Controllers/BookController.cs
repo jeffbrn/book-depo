@@ -60,5 +60,19 @@ namespace BookRepo.wwwMain.Controllers {
 				return StatusCode(500, ex.Message);
 			}
 		}
+
+		[HttpGet("{isbn}/raw")]
+		public async Task<IActionResult> GetRawBookData(string isbn) {
+			try {
+				var retval = await _bookRepo.GetRawData(isbn) ?? throw new ArgumentException($"Unknown ISBN '{isbn}'");
+				return Ok(retval);
+			} catch (ArgumentException ex) {
+				_log.LogWarning(ex, ex.Message);
+				return BadRequest(ex.Message);
+			} catch (Exception ex) {
+				_log.LogError(ex, ex.Message);
+				return StatusCode(500, ex.Message);
+			}
+		}
 	}
 }

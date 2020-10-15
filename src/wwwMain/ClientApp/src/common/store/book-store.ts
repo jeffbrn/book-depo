@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import VueCompositionApi, { computed, ref } from '@vue/composition-api';
 import ApiService from '@/common/services/api-service';
-import BookSumm from '@/common/types/booksumm';
-import BookDetails from '@/common/types/bookdetails';
+import BookSumm from '@/common/types/book-summ';
+import BookDetails from '@/common/types/book-details';
+import RawBookData from '@/common/types/raw-book-data';
 
 Vue.use(VueCompositionApi);
 
@@ -32,11 +33,17 @@ async function getBook(id: string): Promise<BookDetails> {
   return response.data;
 }
 
+async function getBookRawData(isbn: string): Promise<RawBookData> {
+  const response = await api.getRawData(isbn);
+  return response.data;
+}
+
 const BookStore = {
   setBooks,
   loadBooks,
   getBooks,
   getBook,
+  getBookRawData,
 };
 
 export default BookStore;

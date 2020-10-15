@@ -1,8 +1,8 @@
 <template>
   <div v-if="showIt" class="bg-white border fixed bottom-0 w-full pt-2 px-4" style="max-width: 1024px; height: 16rem">
-    <div class="grid grid-cols-8">
+    <div class="grid grid-cols-8 h-full">
       <div class="col-span-8">
-        <button class="float-right border-0 hover:text-gray-600" @click="close">
+        <button class="float-right border-0 hover:text-gray-600 relative" style="-.5rem" @click="close">
           <font-awesome-icon :icon="[ 'fas', 'times-circle' ]" class="text-sm" />
         </button>
         <h2>{{ title }}</h2>
@@ -10,9 +10,9 @@
       <div class="col-span-7">
         <slot />
       </div>
-      <div class="pt-10">
-        <div class="flex flex-col-reverse">
-          <button :class="primaryBtn">
+      <div>
+        <div class="flex flex-col">
+          <button :class="primaryBtn" @click="update">
             Update
           </button>
           <button :class="secondaryBtn" @click="close">
@@ -41,23 +41,24 @@ export default defineComponent({
     },
   },
   setup() {
-    const primaryBtn = ref([...DefaultStyles.primaryButton, 'm-3']);
-    const secondaryBtn = ref([...DefaultStyles.secondaryButton, 'm-3']);
+    const primaryBtn = ref([...DefaultStyles.primaryButton, 'm-1']);
+    const secondaryBtn = ref([...DefaultStyles.secondaryButton, 'm-1']);
 
     onBeforeUpdate(() => {
-      console.log('onBeforeUpdate');
+      // console.log('onBeforeUpdate');
     });
 
     function close(this: any) {
-      this.$emit('close');
+      this.$emit('close', false);
     }
 
     function update(this: any) {
-      this.$emit('update');
+      this.$emit('close', true);
     }
 
     return {
       close,
+      update,
       primaryBtn,
       secondaryBtn,
     };
