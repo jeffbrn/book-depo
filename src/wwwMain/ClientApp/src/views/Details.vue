@@ -83,15 +83,37 @@
           </div>
         </div>
         <field-details :show-it="coverDetailsVisible" title="Cover Data" @close="coverDetailsClose">
-          <div class="flex flex-row">
-            <div class="mx-4 my-2">
-              Cover 1
+          <div class="grid grid-cols-3 gap-x-4">
+            <div class="flex flex-row">
+              <img :src="raw.bookFinder.coverImageUrl" alt="Book Cover" class="rounded-t" style="height: 10rem" @click="selectCover(1)">
+              <div class="mx-5" style="height: 10rem; line-height: 10rem">
+                <font-awesome-icon v-if="coverSeln == 1" :icon="[ 'fas', 'check-circle' ]" class="text-2xl text-green-400" />
+              </div>
             </div>
-            <div class="mx-4 my-2">
-              Cover 2
+            <div class="flex flex-row">
+              <div v-if="raw.isbnDb.coverImageUrl != null">
+                <img :src="raw.isbnDb.coverImageUrl" alt="Book Cover" class="rounded-t" style="height: 10rem" @click="selectCover(2)">
+                <div class="mx-5" style="height: 10rem; line-height: 10rem">
+                  <font-awesome-icon v-if="coverSeln == 2" :icon="[ 'fas', 'check-circle' ]" class="text-2xl text-green-400" />
+                </div>
+              </div>
             </div>
-            <div class="mx-4 my-2">
-              Cover 3
+            <div class="flex flex-row">
+              <div v-if="raw.openLibrary.coverImageUrl != null">
+                <img :src="raw.openLibrary.coverImageUrl" alt="Book Cover" class="rounded-t" style="height: 10rem" @click="selectCover(3)">
+                <div class="mx-5" style="height: 10rem; line-height: 10rem">
+                  <font-awesome-icon v-if="coverSeln == 3" :icon="[ 'fas', 'check-circle' ]" class="text-2xl text-green-400" />
+                </div>
+              </div>
+            </div>
+            <div>
+              Book Finder
+            </div>
+            <div>
+              ISBN Db
+            </div>
+            <div>
+              Open Library
             </div>
           </div>
         </field-details>
@@ -138,17 +160,41 @@ export default defineComponent({
       return `/api/book/${bookId}/cover`;
     }
 
+    const coverSeln = ref(1);
     const coverDetailsVisible = ref(false);
     function coverDetailsShow() {
       coverDetailsVisible.value = true;
+      coverSeln.value = 0;
     }
-    function coverDetailsClose(doUpdate: any) {
-      console.log(doUpdate);
+    function coverDetailsClose(doUpdate: boolean) {
+      if (doUpdate) {
+        let newCover = '';
+        switch (coverSeln.value) {
+          case 1:
+            newCover = raw.value.bookFinder.coverImageUrl;
+            break;
+          case 2:
+            newCover = raw.value.isbnDb.coverImageUrl;
+            break;
+          case 3:
+            newCover = raw.value.openLibrary.coverImageUrl;
+            break;
+          default:
+            newCover = '';
+            break;
+        }
+        // now update book
+        console.log(`New cover = ${newCover}`);
+      }
       coverDetailsVisible.value = false;
+    }
+    function selectCover(num: number) {
+      coverSeln.value = num;
     }
 
     return {
       details,
+      raw,
       loading,
       bookCoverSrc,
       labelStyle,
@@ -158,6 +204,8 @@ export default defineComponent({
       coverDetailsVisible,
       coverDetailsShow,
       coverDetailsClose,
+      coverSeln,
+      selectCover,
     };
   },
 });

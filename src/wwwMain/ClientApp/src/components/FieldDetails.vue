@@ -2,10 +2,7 @@
   <div v-if="showIt" class="bg-white border fixed bottom-0 w-full pt-2 px-4" style="max-width: 1024px; height: 16rem">
     <div class="grid grid-cols-8 h-full">
       <div class="col-span-8">
-        <button class="float-right border-0 hover:text-gray-600 relative" style="-.5rem" @click="close">
-          <font-awesome-icon :icon="[ 'fas', 'times-circle' ]" class="text-sm" />
-        </button>
-        <h2>{{ title }}</h2>
+        <h2 class="rounded mb-2 px-2 font-bold text-white bg-blue-300">{{ title }}</h2>
       </div>
       <div class="col-span-7">
         <slot />
