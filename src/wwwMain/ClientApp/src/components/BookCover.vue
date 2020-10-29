@@ -25,7 +25,6 @@ export default defineComponent({
     }
 
     function details(this: any) {
-      // this.$emit('details', props.bookId);
       ctx.root.$router.push({ path: `details/${props.bookId}` });
     }
 

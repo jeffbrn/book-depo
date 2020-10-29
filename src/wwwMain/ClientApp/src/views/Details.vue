@@ -17,7 +17,7 @@
             <div class="flex flex-col">
               <img :src="bookCoverSrc()" alt="Book Cover" class="h-64 w-full rounded-t" @click="details">
               <div class="w-fill content-center">
-                <button class="border rounded shadow w-10 bg-teal-400 text-white focus:outline-none hover:bg-teal-500 focus:bg-teal-500" @click="coverDetailsShow">
+                <button class="border rounded shadow w-10 bg-teal-400 text-white focus:outline-none hover:bg-teal-500 focus:bg-teal-500" @click="coverDetails(true)">
                   <font-awesome-icon :icon="[ 'fas', 'pencil-alt' ]" />
                 </button>
               </div>
@@ -82,61 +82,25 @@
             </div>
           </div>
         </div>
-        <field-details :show-it="coverDetailsVisible" title="Cover Data" @close="coverDetailsClose">
-          <div class="grid grid-cols-3 gap-x-4">
-            <div class="flex flex-row">
-              <img :src="raw.bookFinder.coverImageUrl" alt="Book Cover" class="rounded-t" style="height: 10rem" @click="selectCover(1)">
-              <div class="mx-5" style="height: 10rem; line-height: 10rem">
-                <font-awesome-icon v-if="coverSeln == 1" :icon="[ 'fas', 'check-circle' ]" class="text-2xl text-green-400" />
-              </div>
-            </div>
-            <div class="flex flex-row">
-              <div v-if="raw.isbnDb.coverImageUrl != null">
-                <img :src="raw.isbnDb.coverImageUrl" alt="Book Cover" class="rounded-t" style="height: 10rem" @click="selectCover(2)">
-                <div class="mx-5" style="height: 10rem; line-height: 10rem">
-                  <font-awesome-icon v-if="coverSeln == 2" :icon="[ 'fas', 'check-circle' ]" class="text-2xl text-green-400" />
-                </div>
-              </div>
-            </div>
-            <div class="flex flex-row">
-              <div v-if="raw.openLibrary.coverImageUrl != null">
-                <img :src="raw.openLibrary.coverImageUrl" alt="Book Cover" class="rounded-t" style="height: 10rem" @click="selectCover(3)">
-                <div class="mx-5" style="height: 10rem; line-height: 10rem">
-                  <font-awesome-icon v-if="coverSeln == 3" :icon="[ 'fas', 'check-circle' ]" class="text-2xl text-green-400" />
-                </div>
-              </div>
-            </div>
-            <div>
-              Book Finder
-            </div>
-            <div>
-              ISBN Db
-            </div>
-            <div>
-              Open Library
-            </div>
-          </div>
-        </field-details>
       </div>
     </div>
+    <cover-select :for-isbn="details.isbn" :show-it="coverDetailsVisible" @close="coverDetails(false)" @updated="refresh()" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from '@vue/composition-api';
-import FieldDetails from '@/components/FieldDetails.vue';
-import BookDetails from '../common/types/book-details';
+import CoverSelect from '../components/book-details/CoverSelect.vue';
 import BookStore from '../common/store/book-store';
-import RawBookData from '../common/types/raw-book-data';
+import BookDetails from '../common/types/book-details';
 
 export default defineComponent({
   name: 'Home',
-  components: { FieldDetails },
+  components: { CoverSelect },
   setup(props, ctx) {
     const route = ctx.root.$route;
     const { filters } = ctx.root.$options;
     const details = ref(new BookDetails());
-    const raw = ref(new RawBookData());
     const loading = ref(true);
     const labelStyle = ref(['text-xs', 'text-blue-400', 'mt-6']);
     const inputStyle = ref(['w-full', 'border', 'rounded', 'py-2', 'px-4', 'text-sm', 'bg-gray-100', 'text-gray-700', 'border-gray-300']);
@@ -145,67 +109,42 @@ export default defineComponent({
 
     const { bookId } = route.params;
 
-    onMounted(async () => {
+    const refresh = async () => {
+      console.log('refresh book details');
+      loading.value = true;
       details.value = await BookStore.getBook(bookId);
       if (details.value.publishedOn === null) {
         publishedDate.value = details.value.publishedOnRaw;
       } else {
         publishedDate.value = filters?.dateFormatter(details.value.publishedOn) ?? '';
       }
-      raw.value = await BookStore.getBookRawData(details.value.isbn);
       loading.value = false;
+    };
+
+    onMounted(async () => {
+      await refresh();
     });
 
     function bookCoverSrc() {
       return `/api/book/${bookId}/cover`;
     }
 
-    const coverSeln = ref(1);
     const coverDetailsVisible = ref(false);
-    function coverDetailsShow() {
-      coverDetailsVisible.value = true;
-      coverSeln.value = 0;
-    }
-    function coverDetailsClose(doUpdate: boolean) {
-      if (doUpdate) {
-        let newCover = '';
-        switch (coverSeln.value) {
-          case 1:
-            newCover = raw.value.bookFinder.coverImageUrl;
-            break;
-          case 2:
-            newCover = raw.value.isbnDb.coverImageUrl;
-            break;
-          case 3:
-            newCover = raw.value.openLibrary.coverImageUrl;
-            break;
-          default:
-            newCover = '';
-            break;
-        }
-        // now update book
-        console.log(`New cover = ${newCover}`);
-      }
-      coverDetailsVisible.value = false;
-    }
-    function selectCover(num: number) {
-      coverSeln.value = num;
+    function coverDetails(visibility: boolean) {
+      coverDetailsVisible.value = visibility;
     }
 
     return {
       details,
-      raw,
       loading,
+      refresh,
       bookCoverSrc,
       labelStyle,
       inputStyle,
       inputNumStyle,
       publishedDate,
       coverDetailsVisible,
-      coverDetailsShow,
-      coverDetailsClose,
-      coverSeln,
-      selectCover,
+      coverDetails,
     };
   },
 });
