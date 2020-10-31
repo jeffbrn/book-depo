@@ -27,6 +27,9 @@
             <div class="flex flex-col">
               <div :class="labelStyle">
                 Title
+                <button class="border rounded shadow w-6 bg-teal-400 text-white focus:outline-none hover:bg-teal-500 focus:bg-teal-500" @click="titleDetails(true)">
+                  <font-awesome-icon :icon="[ 'fas', 'pencil-alt' ]" />
+                </button>
               </div>
               <div>
                 <input type="text" v-model="details.title" :class="inputStyle" readonly>
@@ -85,27 +88,34 @@
       </div>
     </div>
     <cover-select :for-isbn="details.isbn" :show-it="coverDetailsVisible" @close="coverDetails(false)" @updated="refresh()" />
+    <title-select :for-isbn="details.isbn" :show-it="titleDetailsVisible" @close="titleDetails(false)" @updated="refresh()" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from '@vue/composition-api';
 import CoverSelect from '../components/book-details/CoverSelect.vue';
+import TitleSelect from '../components/book-details/TitleSelect.vue';
 import BookStore from '../common/store/book-store';
 import BookDetails from '../common/types/book-details';
+import DefaultStyles from '../common/styles/classes';
 
 export default defineComponent({
   name: 'Home',
-  components: { CoverSelect },
+  components: {
+    CoverSelect,
+    TitleSelect,
+  },
   setup(props, ctx) {
     const route = ctx.root.$route;
     const { filters } = ctx.root.$options;
     const details = ref(new BookDetails());
     const loading = ref(true);
-    const labelStyle = ref(['text-xs', 'text-blue-400', 'mt-6']);
-    const inputStyle = ref(['w-full', 'border', 'rounded', 'py-2', 'px-4', 'text-sm', 'bg-gray-100', 'text-gray-700', 'border-gray-300']);
-    const inputNumStyle = ref(['w-32', 'border', 'rounded', 'py-2', 'px-4', 'text-sm', 'bg-gray-100', 'text-gray-700', 'border-gray-300']);
     const publishedDate = ref('');
+
+    const labelStyle = ref([...DefaultStyles.labelStyle]);
+    const inputStyle = ref([...DefaultStyles.inputStyle]);
+    const inputNumStyle = ref([...DefaultStyles.inputNumStyle]);
 
     const { bookId } = route.params;
 
@@ -134,6 +144,11 @@ export default defineComponent({
       coverDetailsVisible.value = visibility;
     }
 
+    const titleDetailsVisible = ref(false);
+    function titleDetails(visibility: boolean) {
+      titleDetailsVisible.value = visibility;
+    }
+
     return {
       details,
       loading,
@@ -145,6 +160,8 @@ export default defineComponent({
       publishedDate,
       coverDetailsVisible,
       coverDetails,
+      titleDetailsVisible,
+      titleDetails,
     };
   },
 });
