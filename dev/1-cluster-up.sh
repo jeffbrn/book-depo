@@ -9,8 +9,8 @@ U=`logname`
 k3d cluster create bookrepo -p 27017:30017@loadbalancer --volume /tmp/bookrepo/mongo:/tmp/bookrepo/mongo --volume $PWD/registries.yaml:/etc/rancher/k3s/registries.yaml --agents 1
 
 # Fix ownership of kube config created by k3d
-echo "Changing kube config owner to ${U}"
-chown $U ~/.kube/config
+#echo "Changing kube config owner to ${U}"
+#chown $U ~/.kube/config
 
 docker volume create local_registry
 docker container run -d --name registry.localhost -v local_registry:/var/lib/registry --restart always -p 5000:5000 registry:2
