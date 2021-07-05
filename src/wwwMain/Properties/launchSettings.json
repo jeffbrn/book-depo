@@ -15,36 +15,12 @@
 				"ASPNETCORE_ENVIRONMENT": "Development"
 			}
 		},
-		"wwwMain": {
+		"local-svcs": {
 			"commandName": "Project",
 			"launchBrowser": true,
-			"applicationUrl": "http://localhost:5000",
+			"applicationUrl": "http://localhost:6000;https://localhost:6001",
 			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Development"
-			}
-		},
-		"Laptop": {
-			"commandName": "Project",
-			"launchBrowser": true,
-			"applicationUrl": "http://localhost:5000",
-			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Laptop"
-			}
-		},
-		"Desktop1": {
-			"commandName": "Project",
-			"launchBrowser": true,
-			"applicationUrl": "http://localhost:5000",
-			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Desktop1"
-			}
-		},
-		"Desktop2": {
-			"commandName": "Project",
-			"launchBrowser": true,
-			"applicationUrl": "http://localhost:5000",
-			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Desktop2"
+				"ASPNETCORE_ENVIRONMENT": "local-svc"
 			}
 		}
   }
