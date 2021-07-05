@@ -1,6 +1,11 @@
+# repo files
 .git
 .gitattributes
 .gitignore
 
+# VS files
 bin
 obj
+.vs
+.editorconfig
+*.DotSettings
