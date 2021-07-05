@@ -17,20 +17,18 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  @apply text-center text-gray-600;
 }
 
 #nav {
-  padding: 30px;
+  @apply p-8;
 }
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  @apply text-gray-600 font-bold;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  @apply text-green-500;
 }
 </style>

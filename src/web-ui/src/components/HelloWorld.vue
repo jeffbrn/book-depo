@@ -121,17 +121,17 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
-  margin: 40px 0 0;
+  @apply mt-6;
+  @apply text-lg font-bold;
 }
 ul {
-  list-style-type: none;
-  padding: 0;
+  @apply my-3;
 }
 li {
-  display: inline-block;
-  margin: 0 10px;
+  @apply inline-block;
+  @apply mr-5;
 }
 a {
-  color: #42b983;
+  @apply text-green-500;
 }
 </style>

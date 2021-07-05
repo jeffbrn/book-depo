@@ -1,6 +1,7 @@
 <template>
-  <div class="text-center">
+  <div>
     <img
+      class="m-auto"
       alt="Vue logo"
       src="../assets/logo.png"
     >
