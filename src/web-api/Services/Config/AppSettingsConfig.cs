@@ -9,10 +9,19 @@ using Microsoft.Extensions.Options;
 
 namespace BookRepo.WebApi.Services.Config {
 	public static class AppSettingsConfig {
-		public static void Config(this IServiceCollection services, IConfiguration config) {
-			services.Configure<AppSettings>(config.GetSection("AppSettings"));
+		public static AppSettings Config(this IServiceCollection services, IConfiguration config) {
+			services.AddOptions();
+			
+			var section = config.GetSection("AppSettings") ?? throw new InvalidOperationException("Missing or invalid configuration");
+			services.Configure<AppSettings>(section);
+
 			services.AddScoped(c => c.GetService<IOptions<AppSettings>>()?.Value.Services.Data.Mongo.GetConnection() ?? throw new InvalidOperationException("Application not configured correctly"));
 			services.AddScoped<IBookRepo, MongoBookRepoImpl>();
+
+
+			using var sp = services.BuildServiceProvider();
+			var opts = sp.GetRequiredService<IOptions<AppSettings>>();
+			return opts.Value;
 		}
 	}
 }

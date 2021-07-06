@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 
 namespace BookRepo.WebApi {
 	public class Startup {
+		private const string _ALLOW_SPECIFIC_ORIGINS = "Web_UI_CORS_Allow";
 		public Startup(IConfiguration configuration) {
 			Configuration = configuration;
 		}
@@ -17,7 +18,16 @@ namespace BookRepo.WebApi {
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
-			services.Config(Configuration);
+			var settings = services.Config(Configuration);
+
+			services.AddCors(o => {
+				o.AddPolicy(_ALLOW_SPECIFIC_ORIGINS, builder => {
+					builder.WithOrigins(settings.Security.ClientAddress);
+					builder.AllowAnyHeader();
+					builder.AllowAnyMethod();
+					builder.AllowCredentials();
+				});
+			});
 
 			services.AddControllers();
 			services.AddSwaggerGen(c => {
@@ -36,6 +46,8 @@ namespace BookRepo.WebApi {
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			app.UseCors(_ALLOW_SPECIFIC_ORIGINS);
 
 			app.UseAuthorization();
 

@@ -1,6 +1,16 @@
+# git support files
 .git
 .gitattributes
 .gitignore
 
+# VS support files
 bin
 obj
+.vs
+.vscode
+
+# npm files
+node_modules
+
+# dox
+*.md
