@@ -1,23 +1,35 @@
 <template>
-  <div>
-    <img
-      class="m-auto"
-      alt="Vue logo"
-      src="../assets/logo.png"
+  <div class="book-list">
+    <div v-if="loading">
+      <p>Loading ...</p>
+    </div>
+    <div
+      v-if="!loading"
+      class="covers"
     >
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+      <book-cover
+        class="cover-list"
+        v-for="b in books"
+        :key="b.id"
+        :book-id="b.id"
+        @click="gotoDetails(b.id)"
+      />
+    </div>
+    <router-link to="/book/60e312bd5c476fd9244b2c68">
+      test
+    </router-link>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import BookCover from '@/components/BookCover.vue'
 import ApiService from '@/services/api/api-services';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    BookCover
   },
   data() {
     return {
@@ -36,6 +48,10 @@ export default {
       } catch(error) {
         console.log(error);
       }
+    },
+    gotoDetails(id) {
+      console.log('goto details: ', id);
+      this.$router.push({ name: 'BookDetail', params: { bid: id }});
     }
   },
   mounted() {
@@ -44,3 +60,21 @@ export default {
   }
 }
 </script>
+
+<style>
+.book-list {
+  @apply bg-white w-full text-xl md:text-2xl text-gray-800 leading-normal rounded-t;
+}
+
+.book-list .empty-list {
+  @apply w-full p-6 flex flex-col flex-shrink;
+}
+
+.book-list .covers {
+  @apply flex flex-row flex-wrap justify-start pt-12;
+}
+
+.book-list .cover-list {
+  @apply w-1/8 mx-3 p-0 shadow-lg;
+}
+</style>
