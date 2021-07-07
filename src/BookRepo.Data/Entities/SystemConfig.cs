@@ -6,6 +6,6 @@ namespace BookRepo.Data.Entities {
 	[CollectionName("aaaSystemConfig")]
 	[BsonIgnoreExtraElements(true)]
 	public class SystemConfig : EntityBase {
-		public string SchemaVersion { get; set; }
+		public string SchemaVersion { get; init; } = "";
 	}
 }

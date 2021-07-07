@@ -10,7 +10,7 @@ namespace BookRepo.Data.Common {
 		static DatabaseConfiguration() {
 			var dll = typeof(EntityBase).Assembly;
 			var dllInfo = FileVersionInfo.GetVersionInfo(dll.Location);
-			_CURR_VERSION = Version.Parse(dllInfo.FileVersion);
+			_CURR_VERSION = Version.Parse(dllInfo.FileVersion ?? "0.0.0.0");
 		}
 
 		public static void CheckSchema(this IMongoDatabase db) {
@@ -35,7 +35,7 @@ namespace BookRepo.Data.Common {
 				var bookColl = db.GetEntityCollection<Book>();
 				var bookIdx = new CreateIndexModel<Book>(Builders<Book>.IndexKeys.Ascending(x => x.Isbn), new CreateIndexOptions { Name = "Book_Isbn_Idx", Unique = true });
 				bookColl.Indexes.CreateOne(bookIdx);
-				bookIdx = new CreateIndexModel<Book>(Builders<Book>.IndexKeys.Ascending(x => x.CreatedOn), new CreateIndexOptions { Name = "Book_CreatedOn_Idx", Unique = false });
+				bookIdx = new CreateIndexModel<Book>(Builders<Book>.IndexKeys.Descending(x => x.CreatedOn), new CreateIndexOptions { Name = "Book_CreatedOn_Idx", Unique = false });
 				bookColl.Indexes.CreateOne(bookIdx);
 
 				dbVers = Version.Parse("0.1.00923.1");

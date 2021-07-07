@@ -8,25 +8,25 @@ namespace BookRepo.DataMiner.BookFinder {
 		protected override string BookDataUrl { get; } = "https://www.bookfinder.com/search/?author=&title=&lang=en&isbn={ISBN}&new_used=*&destination=us&currency=USD&mode=basic&st=sr&ac=qr";
 
 		/// <inheritdoc />
-		protected override string TitleQuery { get; } = "#describe-isbn-title|.text";
+		protected override string? TitleQuery { get; } = "#describe-isbn-title|.text";
 
 		/// <inheritdoc />
-		protected override string AuthorQuery { get; } = "span[itemprop=author]|.text";
+		protected override string? AuthorQuery { get; } = "span[itemprop=author]|.text";
 
 		/// <inheritdoc />
-		protected override string Publisher { get; } = "span[itemprop=publisher]|.text";
+		protected override string? Publisher { get; } = "span[itemprop=publisher]|.text";
 
 		/// <inheritdoc />
-		protected override string DatePublishedQuery { get; } = null;
+		protected override string? DatePublishedQuery { get; } = null;
 
 		/// <inheritdoc />
-		protected override string NumPagesQuery { get; } = null;
+		protected override string? NumPagesQuery { get; } = null;
 
 		/// <inheritdoc />
-		protected override string DescriptionQuery { get; } = "#bookSummary > p|.text[]";
+		protected override string? DescriptionQuery { get; } = "#bookSummary > p|.text[]";
 
 		/// <inheritdoc />
-		protected override string CoverImgQuery { get; } = "img#coverImage|src";
+		protected override string? CoverImgQuery { get; } = "img#coverImage|src";
 
 		#endregion
 	}

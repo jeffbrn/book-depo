@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookRepo.Data", "BookRepo.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookRepo.DataMiner", "BookRepo.DataMiner\BookRepo.DataMiner.csproj", "{416B6FDB-9B9F-4A30-A527-2F6ED6555260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web-api", "web-api\web-api.csproj", "{8D688276-5991-4A8A-ADF9-450747390651}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "web-api", "web-api\web-api.csproj", "{8D688276-5991-4A8A-ADF9-450747390651}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLoader", "DataLoader\DataLoader.csproj", "{7F2715F8-4BAC-4837-A207-8F9E30D62139}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8D688276-5991-4A8A-ADF9-450747390651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D688276-5991-4A8A-ADF9-450747390651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D688276-5991-4A8A-ADF9-450747390651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F2715F8-4BAC-4837-A207-8F9E30D62139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F2715F8-4BAC-4837-A207-8F9E30D62139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F2715F8-4BAC-4837-A207-8F9E30D62139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F2715F8-4BAC-4837-A207-8F9E30D62139}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

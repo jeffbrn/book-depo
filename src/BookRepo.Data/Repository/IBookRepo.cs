@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BookRepo.Data.Entities;
+using BookRepo.Data.Models;
 using MongoDB.Bson;
 
 namespace BookRepo.Data.Repository {
@@ -20,5 +21,7 @@ namespace BookRepo.Data.Repository {
 		Task StoreRawData(ExtnBookData data);
 
 		Task<List<TModel>> GetAllRaw<TModel>(Expression<Func<ExtnBookData, TModel>> projection);
+
+		Task<LibraryStatsModel> GetStats();
 	}
 }

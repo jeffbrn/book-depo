@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BookRepo.Data.Common;
 using BookRepo.Data.Entities;
+using BookRepo.Data.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -43,6 +44,14 @@ namespace BookRepo.Data.Repository.Impl {
 		/// <inheritdoc />
 		public async Task<List<TModel>> GetAllRaw<TModel>(Expression<Func<ExtnBookData, TModel>> projection) =>
 			await _rawColl.Find(x => true).Project(projection).ToListAsync();
+
+		/// <inheritdoc />
+		public async Task<LibraryStatsModel> GetStats() {
+			var num = await _bookColl.CountDocumentsAsync(x => true);
+			var cutoff = DateTime.UtcNow.AddDays(-7);
+			var latest = await _bookColl.Find(x => x.CreatedOn >= cutoff).Project(BookInfoModel.GetMap()).ToListAsync();
+			return new LibraryStatsModel {NumBooks = num, LatestUploaded = latest};
+		}
 
 		#endregion
 	}

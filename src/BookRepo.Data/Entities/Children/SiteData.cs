@@ -2,13 +2,13 @@
 
 namespace BookRepo.Data.Entities.Children {
 	public class SiteData {
-		public string Title { get; set; }
-		public string Author { get; set; }
-		public string Publisher { get; set; }
-		public string DatePublished { get; set; }
-		public int? NumPages { get; set; }
-		public string Description { get; set; }
-		public string CoverImageUrl { get; set; }
-		public string RawHtml { get; set; }
+		public string Title { get; init; } = "";
+		public string? Author { get; init; }
+		public string? Publisher { get; init; }
+		public string? DatePublished { get; init; }
+		public int? NumPages { get; init; }
+		public string? Description { get; init; }
+		public string? CoverImageUrl { get; init; }
+		public string RawHtml { get; init; } = "";
 	}
 }

@@ -7,16 +7,16 @@ namespace BookRepo.Data.Entities {
 	[CollectionName("books")]
 	[BsonIgnoreExtraElements(true)]
 	public class Book : EntityBase {
-		public DateTime CreatedOn { get; set; }
-		public string Isbn { get; set; }
-		public string Title { get; set; }
-		public string Author { get; set; }
-		public string PublishedOnRaw { get; set; }
-		public DateTime? PublishedOn { get; set; }
-		public string Publisher { get; set; }
-		public int? NumPages { get; set; }
-		public string Description { get; set; }
-		public List<string> Tags { get; set; } = new List<string>();
-		public List<byte> Cover { get; set; }
+		public DateTime CreatedOn { get; init; }
+		public string Isbn { get; init; } = "";
+		public string Title { get; init; } = "";
+		public string? Author { get; init; }
+		public string? PublishedOnRaw { get; init; }
+		public DateTime? PublishedOn { get; init; }
+		public string? Publisher { get; init; }
+		public int? NumPages { get; init; }
+		public string? Description { get; init; }
+		public List<string> Tags { get; init; } = new();
+		public List<byte>? Cover { get; init; }
 	}
 }

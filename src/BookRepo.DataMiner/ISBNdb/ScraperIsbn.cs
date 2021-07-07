@@ -8,25 +8,25 @@ namespace BookRepo.DataMiner.ISBNdb {
 		protected override string BookDataUrl { get; } = "https://isbndb.com/book/{ISBN}";
 
 		/// <inheritdoc />
-		protected override string TitleQuery { get; } = "div#block-multipurpose-business-theme-page-title > h1|.text";
+		protected override string? TitleQuery { get; } = "div#block-multipurpose-business-theme-page-title > h1|.text";
 
 		/// <inheritdoc />
-		protected override string AuthorQuery { get; } = null;
+		protected override string? AuthorQuery { get; } = null;
 
 		/// <inheritdoc />
-		protected override string Publisher { get; } = null;
+		protected override string? Publisher { get; } = null;
 
 		/// <inheritdoc />
-		protected override string DatePublishedQuery { get; } = null;
+		protected override string? DatePublishedQuery { get; } = null;
 
 		/// <inheritdoc />
-		protected override string NumPagesQuery { get; } = null;
+		protected override string? NumPagesQuery { get; } = null;
 
 		/// <inheritdoc />
-		protected override string DescriptionQuery { get; } = null;
+		protected override string? DescriptionQuery { get; } = null;
 
 		/// <inheritdoc />
-		protected override string CoverImgQuery { get; } = "div.artwork > object|.data";
+		protected override string? CoverImgQuery { get; } = "div.artwork > object|.data";
 
 		#endregion
 	}

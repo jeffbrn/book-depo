@@ -30,6 +30,17 @@ namespace BookRepo.WebApi.Controllers {
 			}
 		}
 
+		[HttpGet("stats")]
+		public async Task<IActionResult> GetLibraryStats() {
+			try {
+				var retval = await _bookRepo.GetStats();
+				return Ok(retval);
+			} catch (Exception ex) {
+				_log.LogError(ex, ex.Message);
+				return StatusCode(500, ex.Message);
+			}
+		}
+
 		[HttpGet("{bookId}")]
 		public async Task<IActionResult> GetBookDetail(string bookId) {
 			try {
@@ -51,7 +62,7 @@ namespace BookRepo.WebApi.Controllers {
 				var id = ObjectId.Parse(bookId);
 				var retval = await _bookRepo.GetOne(id, BookImageModel.GetMap()) ?? throw new ArgumentException($"Invalid id {bookId}");
 				if (retval.Cover == null) return NotFound();
-				var str = new MemoryStream(retval.Cover);
+				var str = new MemoryStream(retval.Cover.ToArray());
 				return File(str, "image/jpeg");
 			} catch (ArgumentException ex) {
 				_log.LogWarning(ex, ex.Message);
