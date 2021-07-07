@@ -1,37 +1,30 @@
 <template>
   <div>
-    <div id="nav">
-      <router-link to="/">
-        Home
-      </router-link> |
-      <router-link to="/books">
-        Books
-      </router-link> |
-      <router-link to="/about">
-        About
-      </router-link>
-    </div>
-    <router-view />
+    <navigation />
+    <router-view id="content" />
   </div>
 </template>
+
+<script>
+import Navigation from '@/components/Navigation.vue'
+
+export default {
+  name: 'Application',
+  components: {
+    Navigation
+  }
+}
+</script>
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @apply text-center text-gray-600;
+  @apply text-gray-600;
 }
 
-#nav {
-  @apply p-8;
-}
-
-#nav a {
-  @apply text-gray-600 font-bold;
-}
-
-#nav a.router-link-exact-active {
-  @apply text-green-500;
+#content {
+  @apply container mx-auto;
 }
 </style>
