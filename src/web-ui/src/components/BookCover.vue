@@ -1,11 +1,9 @@
 <template>
   <div class="book-cover">
-    <a href="#">
-      <img
-        :src="bookCoverImgSrc"
-        alt="Book Cover"
-      >
-    </a>
+    <img
+      :src="bookCoverImgSrc"
+      alt="Book Cover"
+    >
   </div>
 </template>
 
@@ -28,6 +26,10 @@ export default {
 </script>
 
 <style>
+.book-cover {
+  @apply cursor-pointer;
+}
+
 .book-cover a {
   @apply no-underline hover:no-underline;
 }
