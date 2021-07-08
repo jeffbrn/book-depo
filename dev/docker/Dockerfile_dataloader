@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:5.0 as builder
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as builder
 
 WORKDIR /src
 COPY ./src ./
@@ -7,7 +7,7 @@ WORKDIR /src/DataLoader
 RUN dotnet publish -o /build
 
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 
 RUN adduser --disabled-password --home /app --gecos '' app
 WORKDIR /app
