@@ -8,6 +8,12 @@ h1 {
 	@apply my-6;
 }
 
+h2 {
+	@apply text-xl;
+	@apply font-bold;
+	@apply my-2;
+}
+
 a {
   @apply underline;
 }

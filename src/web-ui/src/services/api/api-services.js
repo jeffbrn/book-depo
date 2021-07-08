@@ -15,9 +15,14 @@ function bookApi() {
     return http.get(`${url}/${bid}`);
   }
 
+  async function getStats() {
+    return http.get(`${url}/stats`);
+  }
+
   return {
     getAll,
     getDetails,
+    getStats
   };
 }
 
