@@ -6,6 +6,6 @@ namespace BookRepo.DataMiner {
 	public interface IDataScraper {
 		Task<SiteData> GetData(string bookIsbn);
 
-		SiteData Reparse(SiteData data);
+		SiteData Reparse(string rawHtml);
 	}
 }

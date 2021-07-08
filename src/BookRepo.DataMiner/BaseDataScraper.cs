@@ -19,9 +19,9 @@ namespace BookRepo.DataMiner {
 		}
 
 		/// <inheritdoc />
-		public SiteData Reparse(SiteData data) {
+		public SiteData Reparse(string rawHtml) {
 			_html = new HtmlDocument();
-			_html.LoadHtml(data.RawHtml);
+			_html.LoadHtml(rawHtml);
 			return ParseHtml();
 		}
 

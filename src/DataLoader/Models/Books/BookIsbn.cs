@@ -4,7 +4,7 @@ using BookRepo.Data.Entities;
 
 namespace DataLoader.Models.Books {
 	public class BookIsbn {
-		public string Isbn { get; set; }
+		public string Isbn { get; init; } = "";
 
 		public static Expression<Func<Book, BookIsbn>> GetMap() =>
 			x => new BookIsbn {

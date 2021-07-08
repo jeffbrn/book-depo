@@ -2,7 +2,7 @@
 
 namespace DataLoader.Models.Config {
 	public class AppSettings {
-		public ServiceSettings Services { get; set; }
-		public string DataSrcDir { get; set; }
+		public ServiceSettings Services { get; init; } = new();
+		public string DataSrcDir { get; init; } = "";
 	}
 }

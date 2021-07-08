@@ -2,6 +2,6 @@
 
 namespace DataLoader.Models.Config {
 	public class ServiceSettings {
-		public DataSettings Data { get; set; }
+		public DataSettings Data { get; init; } = new();
 	}
 }

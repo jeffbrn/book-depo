@@ -20,17 +20,17 @@ namespace BookRepo.DataMiner {
 
 			if (raw.BookFinder?.RawHtml != null) {
 				scraper = ForBookFinder();
-				scraper.Reparse(raw.BookFinder);
+				raw.BookFinder = scraper.Reparse(raw.BookFinder.RawHtml);
 			}
 
 			if (raw.IsbnDb?.RawHtml != null) {
 				scraper = ForIsbnDb();
-				scraper.Reparse(raw.IsbnDb);
+				raw.IsbnDb = scraper.Reparse(raw.IsbnDb.RawHtml);
 			}
 
 			if (raw.OpenLibrary?.RawHtml != null) {
 				scraper = ForOpenLibrary();
-				scraper.Reparse(raw.OpenLibrary);
+				raw.OpenLibrary = scraper.Reparse(raw.OpenLibrary.RawHtml);
 			}
 		}
 

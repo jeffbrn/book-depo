@@ -21,6 +21,7 @@ namespace DataLoader.Application {
 
 		protected override void OnBeforeRun() {
 			base.OnBeforeRun();
+			if (RootScope == null) throw new InvalidOperationException("Application wrongly configured");
 			var config = RootScope.ServiceProvider.GetService<IOptions<AppSettings>>().Value;
 			var log = RootScope.ServiceProvider.GetService<ILogger<DataLoaderApp>>();
 			var configMsg = new StringBuilder();
