@@ -35,7 +35,7 @@
             Published On
           </dt>
           <dd v-if="details.publishedOn">
-            {{ details.publishedOn }}
+            {{ $filters.dateFormatter1(details.publishedOn) }}
           </dd>
           <dd
             v-else

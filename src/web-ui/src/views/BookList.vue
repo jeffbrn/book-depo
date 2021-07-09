@@ -20,7 +20,7 @@
 
 <script>
 // @ is an alias to /src
-import BookCover from '@/components/BookCover.vue';
+import BookCover from '@/common/components/BookCover.vue';
 import ApiService from '@/services/api/api-services';
 
 export default {

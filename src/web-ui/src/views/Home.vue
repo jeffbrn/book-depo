@@ -8,9 +8,11 @@
       v-if="!loading"
       class="text-left"
     >
-      <h2>Library Statistics</h2>
+      <h2 class="mt-12 text-blue-800">
+        Library Statistics
+      </h2>
       <p>Number of books in catalog: <span class="font-bold">{{ stats.numBooks }}</span></p>
-      <h2 class="mt-5">
+      <h2 class="mt-5 text-blue-800">
         Latest Additions
       </h2>
       <div class="grid grid-cols-2 gap-4 mt-6">
@@ -31,7 +33,7 @@
             {{ b.title }}
           </router-link>
           <div>
-            {{ b.addedDt.format("Do-MMM-YYYY h:mm a") }}
+            {{ $filters.datetimeFormatter1(b.addedOn) }}
           </div>
         </template>
       </div>
@@ -41,7 +43,6 @@
 
 <script>
 import ApiService from '@/services/api/api-services';
-import * as moment from 'moment';
 
 export default {
   name: 'Home',
@@ -59,7 +60,6 @@ export default {
         this.books = [];
         const { data } = await this.api.getStats();
         this.stats = data;
-        this.stats.latestUploaded.forEach(i => i.addedDt = moment(i.addedOn));
         this.loading = false;
       } catch(error) {
         console.log(error);

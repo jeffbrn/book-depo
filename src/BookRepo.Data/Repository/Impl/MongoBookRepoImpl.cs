@@ -49,7 +49,7 @@ namespace BookRepo.Data.Repository.Impl {
 		public async Task<LibraryStatsModel> GetStats() {
 			var num = await _bookColl.CountDocumentsAsync(x => true);
 			var cutoff = DateTime.UtcNow.AddDays(-7);
-			var latest = await _bookColl.Find(x => x.CreatedOn >= cutoff).Project(BookInfoModel.GetMap()).ToListAsync();
+			var latest = await _bookColl.Find(x => x.CreatedOn >= cutoff).Sort(Builders<Book>.Sort.Descending(x => x.CreatedOn)).Limit(15).Project(BookInfoModel.GetMap()).ToListAsync();
 			return new LibraryStatsModel {NumBooks = num, LatestUploaded = latest};
 		}
 
